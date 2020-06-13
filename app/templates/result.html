@@ -5,7 +5,8 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>Financial Eye 360 - {{title}}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<title>Financial Eye 360 - {{title}}</title>
   </head>
   <body>
     <nav class="navbar navbar-dark bg-primary mb-2">
@@ -23,19 +24,24 @@
       </form>
     </nav>
     <div class="container">
+	
     {% for edinetcodeinfo in all_edinetcodeinfo %}
 		<table class="table">
 		<tr>
-			<th>会社名</th>
-			<td>{{edinetcodeinfo.submitter}}</td>
+			<th>会社名 (銘柄コード)</th>
+			<td>{{edinetcodeinfo.submitter}} 【{{edinetcodeinfo.securitiescode}}】</td>
 		</tr>
 		<tr>
 			<th>業種</th>
 			<td>{{edinetcodeinfo.businesstype}}</td>
 		</tr>
 		<tr>
-			<th>銘柄コード</th>
-			<td>{{edinetcodeinfo.securitiescode}}</td>
+			<th>資本金(百万円)</th>
+			<td>{{edinetcodeinfo.capital}}</td>
+		</tr>
+		<tr>
+			<th>決算月</th>
+			<td>{{edinetcodeinfo.fiscalperiod}}</td>
 		</tr>
 		<tr>
 			<th>特色</th>
@@ -43,6 +49,56 @@
 		</tr>
 		</table>
 	{% endfor %}
+	
+
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="chart" width="600" height="400"></canvas>
+
+      </div>
+    </div>
+
+
+	<script>
+var barData = {
+  labels : [{% for financeinfo in all_financeinfo %}
+            "{{financeinfo.enddate}}",
+        {% endfor %}],
+  datasets : [{
+    label: '売上高',
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgba(255,99,132,1)',
+    borderWidth:10,
+    data : [{% for financeinfo in all_financeinfo %}
+                  {{financeinfo.netsales}},
+                {% endfor %}]
+  }]
+}
+var mychart = document.getElementById("chart");
+var chart = new Chart(mychart, {
+  type:'bar',
+  data:barData,
+  options: {
+      title: {
+        display: true,
+        text: '売上高(百万円)'
+      },
+	  scales: {
+        yAxes: [{
+          ticks: {
+            //suggestedMax: Math.max(values) / 1000000,
+            suggestedMin: 0,
+            //stepSize: 10,
+            callback: function(value, index, values){
+              return  value / 1000000
+            }
+          }
+        }]
+      }
+  }
+});
+</script>
+
 	</div>
 	
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
