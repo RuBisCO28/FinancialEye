@@ -30,6 +30,18 @@ class FinanceInfo(Base):
     securitiescode = Column(String(128))
     enddate = Column(String(128))
     netsales = Column(Integer)
+    costofsales = Column(Integer)
+    grossprofit = Column(Integer)
+    sellinggeneral = Column(Integer)
+    operatingincome = Column(Integer)
+    nonoperatingincome = Column(Integer)
+    nonoperatingexpenses = Column(Integer)
+    ordinaryIncome = Column(Integer)
+    extraordinaryincome = Column(Integer)
+    extraordinaryloss = Column(Integer)
+    incomebeforeincometaxes = Column(Integer)
+    incometaxes = Column(Integer)
+    profitloss = Column(Integer)
 
     def __init__(self, rid=None, edinetcode=None, securitiescode=None, enddate=None, netsales=None):
         self.rid = rid
@@ -37,6 +49,18 @@ class FinanceInfo(Base):
         self.securitiescode = securitiescode
         self.enddate = enddate
         self.netsales = netsales
+        self.costofsales = costofsales
+        self.grossprofit = grossprofit
+        self.sellinggeneral = sellinggeneral
+        self.operatingincome = operatingincome
+        self.nonoperatingincome = nonoperatingincome
+        self.nonoperatingexpenses = nonoperatingexpenses
+        self.ordinaryIncome = ordinaryIncome
+        self.extraordinaryincome = extraordinaryincome
+        self.extraordinaryloss = extraordinaryloss
+        self.incomebeforeincometaxes = incomebeforeincometaxes
+        self.incometaxes = incometaxes
+        self.profitloss = profitloss
         
     def __repr__(self):
         return '<Title %r>' % (self.edinetcode)

@@ -14,7 +14,7 @@
         <img src="../static/eye.png" width="30" height="30" alt="">
         Financial Eye 360
       </a>
-	  <form action="/result" method="POST" class="form-inline">
+	  <form action="/search" method="GET" class="form-inline">
         <div class="input-group">
         <input type="text" class="form-control" name="code" id="text5a" placeholder="銘柄コード">
         <div class="input-group-append">
@@ -53,8 +53,100 @@
 
     <div class="row">
       <div class="col-md-6">
-        <canvas id="chart" width="600" height="400"></canvas>
-
+        <canvas id="saleschart" width="600" height="400"></canvas>
+      </div>
+	  <div class="col-md-6">
+        <canvas id="profitchart" width="600" height="400"></canvas>
+      </div>
+	  <div class="col-md-12">
+        <table class="table">
+		<thead class="thead-light">
+		 <th class="fixed-column-0">P/L</th>
+		 {% for financeinfo in all_financeinfo %}
+             <th>{{financeinfo.enddate}}</th>
+         {% endfor %}
+		</thead>
+		<tbody>
+		<tr>
+			<th>売上高</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.netsales}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>売上原価</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.costofsales}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>売上総利益</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.grossprofit}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>販管費</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.sellinggeneral}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>営業利益</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.operatingincome}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>営業外収益</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.nonoperatingincome}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>営業外費用</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.nonoperatingexpenses}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>経常利益</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.ordinaryIncome}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>特別利益</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.extraordinaryincome}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>特別損失</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.extraordinaryloss}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>税引前当期純利益</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.incomebeforeincometaxes}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>法人税等</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.incometaxes}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>当期純利益</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.profitloss}}</td>
+			{% endfor %}
+		</tr>
+		</tbody>
+		</table>
       </div>
     </div>
 
@@ -74,7 +166,7 @@ var barData = {
                 {% endfor %}]
   }]
 }
-var mychart = document.getElementById("chart");
+var mychart = document.getElementById("saleschart");
 var chart = new Chart(mychart, {
   type:'bar',
   data:barData,
@@ -90,7 +182,7 @@ var chart = new Chart(mychart, {
             suggestedMin: 0,
             //stepSize: 10,
             callback: function(value, index, values){
-              return  value / 1000000
+              return  value
             }
           }
         }]
