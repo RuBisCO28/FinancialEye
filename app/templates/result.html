@@ -36,8 +36,8 @@
 			<td>{{edinetcodeinfo.businesstype}}</td>
 		</tr>
 		<tr>
-			<th>資本金(百万円)</th>
-			<td>{{edinetcodeinfo.capital}}</td>
+			<th>URL(IR)</th>
+			<td></td>
 		</tr>
 		<tr>
 			<th>決算月</th>
@@ -50,14 +50,31 @@
 		</table>
 	{% endfor %}
 	
-
     <div class="row">
       <div class="col-md-6">
         <canvas id="saleschart" width="600" height="400"></canvas>
       </div>
 	  <div class="col-md-6">
-        <canvas id="profitchart" width="600" height="400"></canvas>
+        <canvas id="cashchart" width="600" height="400"></canvas>
       </div>
+	</div>
+	  
+	<ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">P/L</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="item2-tab" data-toggle="tab" href="#item2" role="tab" aria-controls="item2" aria-selected="false">B/S</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" id="item3-tab" data-toggle="tab" href="#item3" role="tab" aria-controls="item3" aria-selected="false">C/S</a>
+      </li>
+    </ul>
+ 	
+	<div class="tab-content">
+    <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="item1-tab">
+	  
+	  <div class="row">
 	  <div class="col-md-12">
         <table class="table">
 		<thead class="thead-light">
@@ -112,7 +129,7 @@
 		<tr>
 			<th>経常利益</th>
 			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.ordinaryIncome}}</td>
+			<td>{{financeinfo.ordinaryincome}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
@@ -148,32 +165,305 @@
 		</tbody>
 		</table>
       </div>
+	  </div>
+	
     </div>
+	
+	<div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
+	
+	<div class="row">
+	  <div class="col-md-12">
+        <table class="table">
+		<thead class="thead-light">
+		 <th class="fixed-column-0">B/S</th>
+		 {% for financeinfo in all_financeinfo %}
+             <th>{{financeinfo.enddate}}</th>
+         {% endfor %}
+		</thead>
+		<tbody>
+		<tr>
+			<th>流動資産</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.currentassets}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>固定資産</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.noncurrentassets}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>有形固定資産</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.propertyplantandequipment}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>無形固定資産</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.intangibleassets}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>投資その他の資産</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.investmentsAndotherAssets}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>流動負債</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.currentliabilities}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>固定負債</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.noncurrentliabilities}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>純資産</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.netAssets}}</td>
+			{% endfor %}
+		</tr>
+		</tbody>
+		</table>
+      </div>
+	</div>
+	
+	</div>
+	  
+	<div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
+	
+	<div class="row">
+	  <div class="col-md-12">
+        <table class="table">
+		<thead class="thead-light">
+		 <th class="fixed-column-0">C/S</th>
+		 {% for financeinfo in all_financeinfo %}
+             <th>{{financeinfo.enddate}}</th>
+         {% endfor %}
+		</thead>
+		<tbody>
+		<tr>
+			<th>営業活動によるキャッシュ・フロー</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.scf}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>投資活動によるキャッシュ・フロー</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.icf}}</td>
+			{% endfor %}
+		</tr>
+		<tr>
+			<th>財務活動によるキャッシュ・フロー</th>
+			{% for financeinfo in all_financeinfo %}
+			<td>{{financeinfo.fcf}}</td>
+			{% endfor %}
+		</tr>
+		</tbody>
+		</table>
+      </div>
+	  </div>
+	
+	</div>
+	
+	</div>
+	
+</div>
 
-
-	<script>
+<script>
 var barData = {
   labels : [{% for financeinfo in all_financeinfo %}
             "{{financeinfo.enddate}}",
         {% endfor %}],
-  datasets : [{
-    label: '売上高',
-    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-    borderColor: 'rgba(255,99,132,1)',
-    borderWidth:10,
+  datasets : [
+  {
+    type: 'line',
+    label: '粗利率',
+    borderColor : "rgba(254,97,132,0.8)",
+    pointBackgroundColor    : "rgba(254,97,132,0.8)",
+	fill: false,
+	yAxisID: "y-axis-2",
     data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.grossprofit != '-' %}
+                  ({{financeinfo.grossprofit}} / {{financeinfo.netsales}}) * 100,
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  },
+  {
+    type: 'line',
+    label: '営業利益率',
+    borderColor : "rgba(96,250,126,0.8)",
+    pointBackgroundColor    : "rgba(96,250,126,0.8)",
+	fill: false,
+	yAxisID: "y-axis-2",
+    data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.operatingincome != '-' %}
+                  ({{financeinfo.operatingincome}} / {{financeinfo.netsales}}) * 100,
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  },
+  {
+    type: 'line',
+    label: '経常利益率',
+    borderColor : "rgba(255,252,141,0.8)",
+    pointBackgroundColor    : "rgba(255,252,141,0.8)",
+	fill: false,
+	yAxisID: "y-axis-2",
+    data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.ordinaryincome != '-' %}
+                  ({{financeinfo.ordinaryincome}} / {{financeinfo.netsales}}) * 100,
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  },
+  {
+    type: 'line',
+    label: '当期純利益率',
+    borderColor : "rgba(218,181,255,0.8)",
+    pointBackgroundColor    : "rgba(218,181,255,0.8)",
+	fill: false,
+	yAxisID: "y-axis-2",
+    data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.profitloss != '-' %}
+                  ({{financeinfo.profitloss}} / {{financeinfo.netsales}}) * 100,
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  },
+  {
+    type: 'bar',
+    label: '売上高(百万円)',
+    borderColor : "rgba(54,164,235,0.8)",
+    backgroundColor : "rgba(54,164,235,0.5)",
+    borderWidth:5,
+	yAxisID: "y-axis-1",
+    data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.netsales != '-' %}
                   {{financeinfo.netsales}},
-                {% endfor %}]
-  }]
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  }
+  ]
 }
-var mychart = document.getElementById("saleschart");
-var chart = new Chart(mychart, {
+var saleschart = document.getElementById("saleschart");
+var chart = new Chart(saleschart, {
   type:'bar',
   data:barData,
   options: {
+      responsive: true,
       title: {
         display: true,
-        text: '売上高(百万円)'
+        text: '通期業績推移'
+      },
+	  scales: {
+        yAxes: [{
+		  id: "y-axis-1",
+		  type: "linear",
+		  position: "left",
+          ticks: {
+            //suggestedMax: Math.max(values) / 1000000,
+            suggestedMin: 0,
+            //stepSize: 10,
+            callback: function(value, index, values){
+              return  value
+            }
+          }
+        },
+		{
+		  id: "y-axis-2",
+		  type: "linear",
+		  position: "right",
+          ticks: {
+            //suggestedMax: Math.max(values) / 1000000,
+            suggestedMin: 0,
+            //stepSize: 10,
+            callback: function(value, index, values){
+              return  value + '%'
+            }
+          },
+		  gridLines: {
+			drawOnChartArea: false, 
+          }
+        }
+		]
+      }
+  }
+});
+
+var CashData = {
+  labels : [{% for financeinfo in all_financeinfo %}
+            "{{financeinfo.enddate}}",
+        {% endfor %}],
+  datasets : [
+  {
+    type: 'bar',
+    label: '営業CF(百万円)',
+    borderColor : "rgba(254,97,132,0.8)",
+    backgroundColor : "rgba(254,97,132,0.5)",
+    borderWidth:5,
+    data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.scf != '-' %}
+                  {{financeinfo.scf}},
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  },
+  {
+    type: 'bar',
+    label: '投資CF(百万円)',
+    borderColor : "rgba(54,164,235,0.8)",
+    backgroundColor : "rgba(54,164,235,0.5)",
+    borderWidth:5,
+    data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.icf != '-' %}
+                  {{financeinfo.icf}},
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  },
+  {
+    type: 'bar',
+    label: '財務CF(百万円)',
+    borderColor : "rgba(96,250,126,0.8)",
+    backgroundColor : "rgba(96,250,126,0.5)",
+    borderWidth:5,
+    data : [{% for financeinfo in all_financeinfo %}
+			{%if financeinfo.fcf != '-' %}
+                  {{financeinfo.fcf}},
+			{% else %}
+				,
+			{% endif %}
+           {% endfor %}]
+  }
+  ]
+}
+
+var cashchart = document.getElementById("cashchart");
+var chart = new Chart(cashchart, {
+  type:'bar',
+  data:CashData,
+  options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'キャッシュフロー推移'
       },
 	  scales: {
         yAxes: [{
@@ -185,7 +475,8 @@ var chart = new Chart(mychart, {
               return  value
             }
           }
-        }]
+        }
+		]
       }
   }
 });
