@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request,redirect
 from models.models import EdinetCodeInfo
 from models.models import FinanceInfo
+from models.models import Stocks
 from decimal import Decimal, ROUND_HALF_UP
 
 app = Flask(__name__)
@@ -20,6 +21,7 @@ def get():
 @app.route('/company/<code>')
 def get_finance(code):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
+    all_stocks = Stocks.query.filter(Stocks.code==code).all()
     all_financeinfo = FinanceInfo.query.filter(FinanceInfo.securitiescode==code).all()
     for financeinfo in all_financeinfo:
         # netsales
@@ -189,8 +191,8 @@ def get_finance(code):
         else:
             tmp = financeinfo.fcf / 1000000
             financeinfo.fcf = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
-
-    return render_template("result.html",title=code,all_edinetcodeinfo=all_edinetcodeinfo, all_financeinfo=all_financeinfo)
+    
+    return render_template("result.html",title=code,all_edinetcodeinfo=all_edinetcodeinfo, all_financeinfo=all_financeinfo, all_stocks=all_stocks)
 
 if __name__ == "__main__":
     app.run(debug=True)

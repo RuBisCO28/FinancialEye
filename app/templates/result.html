@@ -51,6 +51,9 @@
 	{% endfor %}
 	
     <div class="row">
+	  <div class="col-md-6">
+        <canvas id="stockchart" width="300" height="200"></canvas>
+      </div>
       <div class="col-md-6">
         <canvas id="saleschart" width="600" height="400"></canvas>
       </div>
@@ -361,7 +364,7 @@ var barData = {
   ]
 }
 var saleschart = document.getElementById("saleschart");
-var chart = new Chart(saleschart, {
+var schart = new Chart(saleschart, {
   type:'bar',
   data:barData,
   options: {
@@ -456,7 +459,7 @@ var CashData = {
 }
 
 var cashchart = document.getElementById("cashchart");
-var chart = new Chart(cashchart, {
+var cchart = new Chart(cashchart, {
   type:'bar',
   data:CashData,
   options: {
@@ -470,6 +473,50 @@ var chart = new Chart(cashchart, {
           ticks: {
             //suggestedMax: Math.max(values) / 1000000,
             suggestedMin: 0,
+            //stepSize: 10,
+            callback: function(value, index, values){
+              return  value
+            }
+          }
+        }
+		]
+      }
+  }
+});
+
+var StockData = {
+  labels : [{% for stocks in all_stocks %}
+            "{{stocks.date}}",
+        {% endfor %}],
+  datasets : [
+  {
+    type: 'line',
+    label: '株価',
+    borderColor : "rgba(54,164,235,0.8)",
+	pointBackgroundColor : "rgba(54,164,235,0.8)",
+	fill: false,
+    data : [{% for stocks in all_stocks %}
+			  {{stocks.close}},
+           {% endfor %}]
+  }
+  ]
+}
+
+var stockchart = document.getElementById("stockchart");
+var kchart = new Chart(stockchart, {
+  type:'line',
+  data:StockData,
+  options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: '株価'
+      },
+	  scales: {
+        yAxes: [{
+          ticks: {
+            //suggestedMax: Math.max(values) / 1000000,
+            //suggestedMin: 0,
             //stepSize: 10,
             callback: function(value, index, values){
               return  value
