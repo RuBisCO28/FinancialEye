@@ -50,10 +50,19 @@
 		</table>
 	{% endfor %}
 	
+	<ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="item11-tab" data-toggle="tab" href="#item11" role="tab" aria-controls="item11" aria-selected="true">財務諸表</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="item22-tab" data-toggle="tab" href="#item22" role="tab" aria-controls="item22" aria-selected="false">株価</a>
+      </li>
+    </ul>
+ 	
+	<div class="tab-content">
+    <div class="tab-pane fade show active" id="item11" role="tabpanel" aria-labelledby="item11-tab">
+	
     <div class="row">
-	  <div class="col-md-6">
-        <canvas id="stockchart" width="300" height="200"></canvas>
-      </div>
       <div class="col-md-6">
         <canvas id="saleschart" width="600" height="400"></canvas>
       </div>
@@ -274,6 +283,18 @@
       </div>
 	  </div>
 	
+	</div>
+	
+	</div>
+	
+	</div>
+	
+	<div class="tab-pane fade show active" id="item22" role="tabpanel" aria-labelledby="item22-tab">
+	<div class="row">
+	  <div class="col-md-8">
+        <canvas id="stockchart" width="600" height="400"></canvas>
+      </div>
+	</div>
 	</div>
 	
 	</div>

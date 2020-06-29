@@ -13,6 +13,12 @@ def index():
     all_edinetcodeinfo = EdinetCodeInfo.query.all()
     return render_template("index.html",title=title,all_edinetcodeinfo=all_edinetcodeinfo)
 
+@app.route("/type")
+def type():
+    title = request.args.get("title")
+    all_edinetcodeinfo = EdinetCodeInfo.query.all()
+    return render_template("index.html",title=title,all_edinetcodeinfo=all_edinetcodeinfo)
+
 @app.route("/search",methods=['GET'])
 def get():
     code = "/company/" + request.args.get("code","")

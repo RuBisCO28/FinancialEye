@@ -37,13 +37,73 @@
           </div>
         </form>
 	    </div>
-    <div class="col-sm"></div>
-      </div>
+		<div class="col-sm"></div>
+		<div class="col-12"> &nbsp </div>
+        </div>
+		
+		<div class="row">
+		<div class="col-3"> &nbsp </div>
+		<div class="col-6">
+		<table class="table table-bordered">
+		<tr>
+		<td class="table-primary">水産・農林業</td>
+		<td class="table-warning">鉱業</td>
+		<td class="table-success">建設業</td>
+		<td class="table-danger">食料品</td>
+		<td class="table-danger">繊維製品</td>
+		</tr>
+		<tr>
+		<td class="table-danger">パルプ・紙</td>
+		<td class="table-danger">化学</td>
+		<td class="table-danger">医薬品</td>
+		<td class="table-danger">石油</td>
+		<td class="table-danger">石炭製品</td>
+		</tr>
+		<tr>
+		<td class="table-danger">ゴム製品</td>
+		<td class="table-danger">ガラス・土石製品</td>
+		<td class="table-danger">鉄鋼</td>
+		<td class="table-danger">非鉄金属</td>
+		<td class="table-danger">金属製品</td>
+		</tr>
+		<tr>
+		<td class="table-danger">機械</td>
+		<td class="table-danger">電気機器</td>
+		<td class="table-danger">輸送用機器</td>
+		<td class="table-danger">精密機器</td>
+		<td class="table-danger">その他製品</td>
+		</tr>
+		<tr>
+		<td class="table-warning">電気・ガス業</td>
+		<td class="table-info">陸運業</td>
+		<td class="table-info">海運業</td>
+		<td class="table-info">空運業</td>
+		<td class="table-info">倉庫・運輸関連</td>
+		</tr>
+		<tr>
+		<td class="table-primary">情報・通信業</td>
+		<td class="table-success">卸売業</td>
+		<td class="table-success">小売業</td>
+		<td class="table-danger">銀行業</td>
+		<td class="table-danger">証券、商品先物取引業</td>
+		</tr>
+		<tr>
+		<td class="table-danger">保険業</td>
+		<td class="table-danger">その他金融業</td>
+		<td class="table-info">不動産業</td>
+		<td class="table-info">サービス業</td>
+		<td class="table-light"></td>
+		</tr>
+		</table>
+		<div class="col-3"> &nbsp </div>
+        </div>
+		</div>
     </div>
-
+	
 	{% for edinetcodeinfo in all_edinetcodeinfo %}
     <p align="center">{{edinetcodeinfo.edinetcode}}：{{edinetcodeinfo.submitter}}（{{edinetcodeinfo.securitiescode}}）</p>
     {% endfor %}
+	
 	
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
