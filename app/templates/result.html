@@ -28,31 +28,32 @@
     {% for edinetcodeinfo in all_edinetcodeinfo %}
 		<table class="table">
 		<tr>
-			<th>会社名 (銘柄コード)</th>
-			<td>{{edinetcodeinfo.submitter}} 【{{edinetcodeinfo.securitiescode}}】</td>
+			<th style="width:20%">会社名 (銘柄コード)</th>
+			<td style="width:80%">{{edinetcodeinfo.submitter}} 【{{edinetcodeinfo.securitiescode}}】</td>
 		</tr>
 		<tr>
-			<th>業種</th>
-			<td>{{edinetcodeinfo.businesstype}}</td>
+			<th style="width:20%">業種</th>
+			<td style="width:80%">{{edinetcodeinfo.businesstype}}</td>
 		</tr>
 		<tr>
-			<th>URL(IR)</th>
-			<td></td>
+			<th style="width:20%">URL(IR)</th>
+			<td style="width:80%"></td>
 		</tr>
 		<tr>
-			<th>決算月</th>
-			<td>{{edinetcodeinfo.fiscalperiod}}</td>
+			<th style="width:20%">決算月</th>
+			<td style="width:80%">{{edinetcodeinfo.fiscalperiod}}</td>
 		</tr>
 		<tr>
-			<th>特色</th>
-			<td>-</td>
+			<th style="width:20%">特色</th>
+			<td style="width:80%">-</td>
 		</tr>
 		</table>
 	{% endfor %}
 	
-	<ul class="nav nav-tabs" role="tablist">
+	<div role="tabpanel2">
+	<ul class="nav nav-tabs" role="tablist2">
       <li class="nav-item">
-        <a class="nav-link active" id="item11-tab" data-toggle="tab" href="#item11" role="tab" aria-controls="item11" aria-selected="true">財務諸表</a>
+        <a class="nav-link active" id="item11-tab" data-toggle="tab" href="#item11" role="tab" aria-controls="item11" aria-selected="true">業績</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="item22-tab" data-toggle="tab" href="#item22" role="tab" aria-controls="item22" aria-selected="false">株価</a>
@@ -60,7 +61,7 @@
     </ul>
  	
 	<div class="tab-content">
-    <div class="tab-pane fade show active" id="item11" role="tabpanel" aria-labelledby="item11-tab">
+    <div class="tab-pane fade show active" id="item11" role="tabpanel2" aria-labelledby="item11-tab">
 	
     <div class="row">
       <div class="col-md-6">
@@ -71,6 +72,7 @@
       </div>
 	</div>
 	  
+	<div role="tabpanel">
 	<ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">P/L</a>
@@ -289,12 +291,16 @@
 	
 	</div>
 	
-	<div class="tab-pane fade show active" id="item22" role="tabpanel" aria-labelledby="item22-tab">
+	</div>
+	
+	<div class="tab-pane fade show active" id="item22" role="tabpanel2" aria-labelledby="item22-tab">
 	<div class="row">
 	  <div class="col-md-8">
         <canvas id="stockchart" width="600" height="400"></canvas>
       </div>
 	</div>
+	</div>
+	
 	</div>
 	
 	</div>

@@ -23,27 +23,26 @@
       </form>
     </nav>
 
-    <div class="container-fluid">
-      <div class="row align-items-center">
-        <div class="col-12"> &nbsp </div>
-        <div class="col-12"> &nbsp </div>
-        <div class="col-sm"></div>
-        <div class="col-sm"><h1 class="text-center">Financial Eye 360</h1></div>
-        <div class="col-sm"></div>
-        <div class="col-12"> &nbsp </div>
-        <div class="col-12"> &nbsp </div>
-        <div class="col-sm"></div>
-		<div class="col-sm"></div>
-		<div class="col-12"> &nbsp </div>
-        </div>
-		
+    <div class="container">
+		<table class="table">
+        <thead class="thead-lignt">
+        <tr>
+		  <th style="width:10%">コード</th>
+		  <th style="width:20%">名称</th>
+		  <th style="width:70%">特色</th>
+		</tr>
+        </thead>
+		<tbody>
+		{% for edinetcodeinfo in all_edinetcodeinfo %}
+		<tr>
+		<td><a href="/company/{{edinetcodeinfo.securitiescode}}"><strong>{{edinetcodeinfo.securitiescode}}</strong></a></td>
+		<td>{{edinetcodeinfo.submitter}}</td>
+		<td>{{edinetcodeinfo.description}}</td>
+		</tr>
+		{% endfor %}
+		</table>
     </div>
-	
-	{% for edinetcodeinfo in all_edinetcodeinfo %}
-    <p align="center">{{edinetcodeinfo.edinetcode}}：{{edinetcodeinfo.submitter}}（{{edinetcodeinfo.securitiescode}}）</p>
-    {% endfor %}
-	
-	
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>

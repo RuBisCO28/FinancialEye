@@ -5,19 +5,22 @@ from models.models import Stocks
 from decimal import Decimal, ROUND_HALF_UP
 
 app = Flask(__name__)
+btd = {'1': '水産・農林業', '2': '鉱業', '3': '建設業', '4': '食料品', '5': '繊維製品', '6': 'パルプ・紙', '7': '化学',
+       '8': '医薬品', '9': '石油・石炭製品', '11': 'ゴム製品', '12': 'ガラス・土石製品', '13': '鉄鋼', '14': '非鉄金属',
+       '15': '金属製品', '16': '機械', '17': '電気機器', '18': '輸送用機器', '19': '精密機器', '20': 'その他製品', '21': '電気・ガス業',
+       '22': '陸運業', '23': '海運業', '24': '空運業', '25': '倉庫・運輸関連', '26': '情報・通信業', '27': '卸売業', '28': '小売業',
+       '29': '銀行業', '30': '証券、商品先物取引業', '31': '保険業', '32': 'その他金融業', '33': '不動産業', '34': 'サービス業'}
 
 @app.route("/")
 @app.route("/index")
 def index():
     title = request.args.get("title")
-    all_edinetcodeinfo = EdinetCodeInfo.query.all()
-    return render_template("index.html",title=title,all_edinetcodeinfo=all_edinetcodeinfo)
+    return render_template("index.html",title=title)
 
-@app.route("/type")
-def type():
-    title = request.args.get("title")
-    all_edinetcodeinfo = EdinetCodeInfo.query.all()
-    return render_template("index.html",title=title,all_edinetcodeinfo=all_edinetcodeinfo)
+@app.route("/buisnesstype/<btype>")
+def buisnesstype(btype):
+    all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.businesstype==btd[btype]).all()
+    return render_template("buisnesstype.html",all_edinetcodeinfo=all_edinetcodeinfo)
 
 @app.route("/search",methods=['GET'])
 def get():
