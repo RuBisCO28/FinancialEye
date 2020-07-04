@@ -3,7 +3,7 @@
 <html>
   <head>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<title>Financial Eye 360</title>
   </head>
@@ -98,6 +98,37 @@
         </div>
 		</div>
     </div>
+	
+	<script src="https://riversun.github.io/chatux/chatux.min.js"></script>
+	<script>
+		const chatux = new ChatUx();
+	
+		//ChatUXの初期化パラメータ
+	const initParam =
+			{
+				renderMode: 'auto',
+				api: {
+					//echo chat server
+					endpoint: 'https://script.google.com/macros/s/AKfycbzro2SWVx5lMKfbLu4cBt16xbqg4lT7xU5wfu4bbSQs-OMcFsQh/exec',
+					method: 'GET',
+					dataType: 'jsonp'
+				},
+				bot: {
+					botPhoto: 'https://riversun.github.io/chatbot/bot_icon_operator.png',
+					humanPhoto: null,
+					widget: {
+						sendLabel: '送信',
+						placeHolder: '分からない単語を入力してみてください'
+					}
+				},
+				window: {
+					title: '株bot',
+					infoUrl: 'https://github.com/riversun/chatux'
+				}
+			};
+		chatux.init(initParam);
+		chatux.start(true);
+	</script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
