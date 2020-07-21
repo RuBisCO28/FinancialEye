@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<title>Financial Eye 360 - {{title}}</title>
   </head>
   <body>
@@ -23,8 +24,8 @@
         </div>
       </form>
     </nav>
-    <div class="container">
-	
+
+	 <div class="container">
     {% for edinetcodeinfo in all_edinetcodeinfo %}
 		<table class="table">
 		<tr>
@@ -49,19 +50,18 @@
 		</tr>
 		</table>
 	{% endfor %}
-	
-	<div role="tabpanel2">
-	<ul class="nav nav-tabs" role="tablist2">
+
+	<ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" id="item11-tab" data-toggle="tab" href="#item11" role="tab" aria-controls="item11" aria-selected="true">業績</a>
+        <a class="nav-link active" id="item11-tab" data-toggle="tab" href="#item11" aria-controls="item11" aria-selected="true">業績</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="item22-tab" data-toggle="tab" href="#item22" role="tab" aria-controls="item22" aria-selected="false">株価</a>
+        <a class="nav-link" id="item22-tab" data-toggle="tab" href="#item22" aria-controls="item22" aria-selected="false">株価</a>
       </li>
     </ul>
  	
 	<div class="tab-content">
-    <div class="tab-pane fade show active" id="item11" role="tabpanel2" aria-labelledby="item11-tab">
+    <div class="tab-pane fade show active" id="item11" aria-labelledby="item11-tab">
 	
     <div class="row">
       <div class="col-md-6">
@@ -71,24 +71,8 @@
         <canvas id="cashchart" width="600" height="400"></canvas>
       </div>
 	</div>
-	  
-	<div role="tabpanel">
-	<ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">P/L</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="item2-tab" data-toggle="tab" href="#item2" role="tab" aria-controls="item2" aria-selected="false">B/S</a>
-      </li>
-	  <li class="nav-item">
-        <a class="nav-link" id="item3-tab" data-toggle="tab" href="#item3" role="tab" aria-controls="item3" aria-selected="false">C/S</a>
-      </li>
-    </ul>
- 	
-	<div class="tab-content">
-    <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="item1-tab">
-	  
-	  <div class="row">
+ 
+	<div class="row">
 	  <div class="col-md-12">
         <table class="table">
 		<thead class="thead-light">
@@ -180,11 +164,7 @@
 		</table>
       </div>
 	  </div>
-	
-    </div>
-	
-	<div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
-	
+
 	<div class="row">
 	  <div class="col-md-12">
         <table class="table">
@@ -247,11 +227,7 @@
 		</table>
       </div>
 	</div>
-	
-	</div>
-	  
-	<div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
-	
+
 	<div class="row">
 	  <div class="col-md-12">
         <table class="table">
@@ -283,29 +259,32 @@
 		</tbody>
 		</table>
       </div>
+	</div>
+	
+	</div>
+	
+	<div class="tab-pane fade" id="item22" aria-labelledby="item22-tab">
+    <div class="row">
+	  <div class="col-md-12">
+        <div id="chart">
+		<div id="candlestick"></div>
+		</div>
 	  </div>
-	
+	  <div class="col-md-12">
+        <div id="chart">
+		<div id="volume"></div>
+		</div>
+	  </div>
+	  <div class="col-md-12">
+        <div id="chart">
+		<div id="filter"></div>
+		</div>
+	  </div>
+    </div>
+    </div>
+
 	</div>
-	
-	</div>
-	
-	</div>
-	
-	</div>
-	
-	<div class="tab-pane fade show active" id="item22" role="tabpanel2" aria-labelledby="item22-tab">
-	<div class="row">
-	  <div class="col-md-8">
-        <canvas id="stockchart" width="600" height="400"></canvas>
-      </div>
-	</div>
-	</div>
-	
-	</div>
-	
-	</div>
-	
-</div>
+</div> <!-- for container -->
 
 <script>
 var barData = {
@@ -510,50 +489,82 @@ var cchart = new Chart(cashchart, {
       }
   }
 });
+</script>
 
-var StockData = {
-  labels : [{% for stocks in all_stocks %}
-            "{{stocks.date}}",
-        {% endfor %}],
-  datasets : [
-  {
-    type: 'line',
-    label: '株価',
-    borderColor : "rgba(54,164,235,0.8)",
-	pointBackgroundColor : "rgba(54,164,235,0.8)",
-	fill: false,
-    data : [{% for stocks in all_stocks %}
-			  {{stocks.close}},
-           {% endfor %}]
-  }
-  ]
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart', 'controls']});
+var chart_div = document.getElementById('chart');
+
+function drawChart() {
+   var data = new google.visualization.DataTable();
+   data.addColumn('datetime', 'Date');
+   data.addColumn('number', 'Open');
+   data.addColumn('number', 'High');
+   data.addColumn('number', 'Low');
+   data.addColumn('number', 'Close');
+   data.addColumn('number', 'Volume');
+   let d=JSON.parse('{{all_stocks|tojson}}');
+   d.forEach(function (di) {
+           data.addRow([{ v: new Date(di.date), f: di.date }, di.open, 
+                          di.high, di.low, di.close, di.volume]);
+   });
+	
+   var dashboard = new google.visualization.Dashboard(chart_div);
+   var control = new google.visualization.ControlWrapper({
+       controlType: 'ChartRangeFilter',
+       containerId: 'filter',
+       options: {
+           filterColumnIndex: 0,
+           ui: {
+               chartType: 'LineChart',
+               chartOptions: {
+                   chartArea: {
+                       height: '80%', width: '100%', 
+                       backgroundColor: { stroke: "gray", strokeWidth: 1 }
+                   },
+                   hAxis: { baselineColor: 'none' }
+               },
+               chartView: { columns: [0, 4] },
+           }
+       }
+   });
+
+   var chart = new google.visualization.ChartWrapper({
+       chartType: 'CandlestickChart',
+       containerId: 'candlestick',
+       options: {
+           chartArea: { height: '80%', width: '100%',  
+                        backgroundColor: { stroke: "gray", strokeWidth: 1 } },
+           hAxis: { type: 'category', slantedText: false, maxTextLines: 1, 
+                    maxAlternation: 1 },
+           legend: { position: 'none' },
+           candlestick: {
+               fallingColor: { strokeWidth: 0, fill: '#a52714' },
+               risingColor: { strokeWidth: 0, fill: '#0f9d58' }
+           },
+           title: "株価:"
+       },
+       view: { columns: [0, 3, 1, 4, 2] }
+   });
+
+   var volume = new google.visualization.ChartWrapper({
+       chartType: 'ColumnChart',
+       containerId: 'volume',
+       options: {
+           chartArea: { height: '80%', width: '100%', top: 40, bottom: 30, 
+                        backgroundColor: { stroke: "gray", strokeWidth: 1 } },
+           hAxis: { type: 'category', slantedText: false, maxTextLines: 1, 
+                    maxAlternation: 1 },
+           legend: { position: 'none' },
+           title: "出来高:"
+       },
+       view: { columns: [0, 5] }
+   });
+
+   dashboard.bind(control, [chart, volume]);
+   dashboard.draw(data);
 }
-
-var stockchart = document.getElementById("stockchart");
-var kchart = new Chart(stockchart, {
-  type:'line',
-  data:StockData,
-  options: {
-      responsive: true,
-      title: {
-        display: true,
-        text: '株価'
-      },
-	  scales: {
-        yAxes: [{
-          ticks: {
-            //suggestedMax: Math.max(values) / 1000000,
-            //suggestedMin: 0,
-            //stepSize: 10,
-            callback: function(value, index, values){
-              return  value
-            }
-          }
-        }
-		]
-      }
-  }
-});
+google.charts.setOnLoadCallback(drawChart);
 </script>
 
 	<script src="https://riversun.github.io/chatux/chatux.min.js"></script>
@@ -584,7 +595,7 @@ var kchart = new Chart(stockchart, {
 				}
 			};
 		chatux.init(initParam);
-		chatux.start(true);
+		chatux.start(false);
 	</script>
 	
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
