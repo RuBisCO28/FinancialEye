@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<html>
+  <head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/bsadmin.css">
+	<link rel="shortcut icon" href="../static/favicon.ico">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<title>Financial Eye 360 - {{code}}</title>
+<style type="text/css">
+<!--
+h4 {
+  padding: 0.25em 0.5em;
+  color: #494949;
+  background: transparent;
+  border-left: solid 5px #7db4e6;
+}
+-->
+</style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-primary">
+	  <a href="/index" class="navbar-brand">
+       <img src="../static/eye.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        Financial Eye 360
+      </a>
+	  <form action="/search" method="GET" class="form-inline">
+        <div class="input-group">
+        <input type="text" class="form-control" name="code" id="text5a" placeholder="銘柄コード">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-secondary">検索</button>
+        </div>
+        </div>
+      </form>
+    </nav>
+	
+	<div class="d-flex align-items-stretch">
+    <div class="sidebar bg-dark">
+        <ul class="list-unstyled">
+            <li><a href="/company/{{code}}">業績データ(通期)</a></li>
+            <li><a href="/stocks/{{code}}">株価データ</a></li>
+            <li><a href="#">Googleトレンド</a></li>
+        </ul>
+    </div>
+
+	 <div class="container-fluid">
+    {% for edinetcodeinfo in all_edinetcodeinfo %}
+		<table class="table">
+		<tr>
+			<th style="width:20%">会社名 (銘柄コード)</th>
+			<td style="width:80%">{{edinetcodeinfo.submitter}} 【{{edinetcodeinfo.securitiescode}}】</td>
+		</tr>
+		<tr>
+			<th style="width:20%">業種</th>
+			<td style="width:80%">{{edinetcodeinfo.businesstype}}</td>
+		</tr>
+		<tr>
+			<th style="width:20%">URL(IR)</th>
+			<td style="width:80%"></td>
+		</tr>
+		<tr>
+			<th style="width:20%">決算月</th>
+			<td style="width:80%">{{edinetcodeinfo.fiscalperiod}}</td>
+		</tr>
+		<tr>
+			<th style="width:20%">特色</th>
+			<td style="width:80%">-</td>
+		</tr>
+		</table>
+	{% endfor %}
+	
+	<div class="row">
+      <div class="col-md-6">
+        <canvas id="gtrendchart" width="600" height="400"></canvas>
+      </div>
+	  <div class="col-md-6">
+	    <h4>トップ[関連キーワード,件数]</h4>
+		<table class="table">
+        {% for top in gtrend_t %}
+		<tr>
+			<td>{{top}}</td>
+		</tr>
+		{% endfor %}
+		</table>
+		<h4>急上昇[関連キーワード,件数]</h4>
+		<table class="table">
+        {% for rising in gtrend_r %}
+		<tr>
+			<td>{{rising}}</td>
+		</tr>
+		{% endfor %}
+		</table>
+      </div>
+	</div>
+
+</div> <!-- container -->
+</div> <!-- sidebar -->
+
+<script>
+var barData = {
+  labels : [{% for i in gtrend_g['date'] %}
+		"{{ i|e }}",
+	{% endfor %}],
+  datasets : [
+  {
+    type: 'line',
+    label: '人気度',
+    borderColor : "rgba(54,164,235,0.8)",
+    pointBackgroundColor    : "rgba(54,164,235,0.5)",
+	fill: false,
+    data : [{% for j in gtrend_g['name'].tolist() %}
+		{{ j|e }},
+	{% endfor %}]
+  }
+  ]
+}
+var gtrendchart = document.getElementById("gtrendchart");
+var gchart = new Chart(gtrendchart, {
+  type:'bar',
+  data:barData,
+  options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: '過去1か月の人気度の傾向'
+      },
+	  scales: {
+        yAxes: [{
+		  id: "y-axis-1",
+		  type: "linear",
+		  position: "left",
+          ticks: {
+            //suggestedMax: Math.max(values) / 1000000,
+            suggestedMin: 0,
+            //stepSize: 10,
+            callback: function(value, index, values){
+              return  value
+            }
+          }
+        }
+		]
+      }
+  }
+});
+</script>
+
+	<script src="https://riversun.github.io/chatux/chatux.min.js"></script>
+	<script>
+		const chatux = new ChatUx();
+	
+		//ChatUXの初期化パラメータ
+	const initParam =
+			{
+				renderMode: 'auto',
+				api: {
+					//echo chat server
+					endpoint: 'https://script.google.com/macros/s/AKfycbzro2SWVx5lMKfbLu4cBt16xbqg4lT7xU5wfu4bbSQs-OMcFsQh/exec',
+					method: 'GET',
+					dataType: 'jsonp'
+				},
+				bot: {
+					botPhoto: 'https://riversun.github.io/chatbot/bot_icon_operator.png',
+					humanPhoto: null,
+					widget: {
+						sendLabel: '送信',
+						placeHolder: '分からない単語を入力してみてください'
+					}
+				},
+				window: {
+					title: '株bot',
+					infoUrl: 'https://github.com/riversun/chatux'
+				}
+			};
+		chatux.init(initParam);
+		chatux.start(false);
+	</script>
+	
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<script src="../static/bsadmin.js"></script>
+  </body>
+</html>

@@ -5,14 +5,15 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<title>Financial Eye 360 - {{title}}</title>
+    <link rel="stylesheet" href="../static/bsadmin.css">
+	<link rel="shortcut icon" href="../static/favicon.ico">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<title>Financial Eye 360 - {{code}}</title>
   </head>
   <body>
-    <nav class="navbar navbar-dark bg-primary mb-2">
+    <nav class="navbar navbar-dark bg-primary">
 	  <a href="/index" class="navbar-brand">
-        <img src="../static/eye.png" width="30" height="30" alt="">
+       <img src="../static/eye.png" width="30" height="30" class="d-inline-block align-top" alt="">
         Financial Eye 360
       </a>
 	  <form action="/search" method="GET" class="form-inline">
@@ -24,8 +25,17 @@
         </div>
       </form>
     </nav>
+	
+	<div class="d-flex align-items-stretch">
+    <div class="sidebar bg-dark">
+        <ul class="list-unstyled">
+            <li><a href="#">業績データ(通期)</a></li>
+            <li><a href="/stocks/{{code}}">株価データ</a></li>
+            <li><a href="/gtrend/{{code}}">Googleトレンド</a></li>
+        </ul>
+    </div>
 
-	 <div class="container">
+	 <div class="container-fluid">
     {% for edinetcodeinfo in all_edinetcodeinfo %}
 		<table class="table">
 		<tr>
@@ -50,20 +60,8 @@
 		</tr>
 		</table>
 	{% endfor %}
-
-	<ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" id="item11-tab" data-toggle="tab" href="#item11" aria-controls="item11" aria-selected="true">業績</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="item22-tab" data-toggle="tab" href="#item22" aria-controls="item22" aria-selected="false">株価</a>
-      </li>
-    </ul>
- 	
-	<div class="tab-content">
-    <div class="tab-pane fade show active" id="item11" aria-labelledby="item11-tab">
 	
-    <div class="row">
+	<div class="row">
       <div class="col-md-6">
         <canvas id="saleschart" width="600" height="400"></canvas>
       </div>
@@ -71,7 +69,22 @@
         <canvas id="cashchart" width="600" height="400"></canvas>
       </div>
 	</div>
- 
+
+	<ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" aria-controls="item1" aria-selected="true">P/L</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="item2-tab" data-toggle="tab" href="#item2" aria-controls="item2" aria-selected="false">B/S</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" id="item3-tab" data-toggle="tab" href="#item3" aria-controls="item3" aria-selected="false">C/S</a>
+      </li>
+    </ul>
+ 	
+	<div class="tab-content">
+    <div class="tab-pane fade show active" id="item1" aria-labelledby="item1-tab">
+	
 	<div class="row">
 	  <div class="col-md-12">
         <table class="table">
@@ -163,8 +176,10 @@
 		</tbody>
 		</table>
       </div>
-	  </div>
-
+	</div>
+	</div>
+	
+    <div class="tab-pane fade" id="item2" aria-labelledby="item2-tab">
 	<div class="row">
 	  <div class="col-md-12">
         <table class="table">
@@ -227,7 +242,9 @@
 		</table>
       </div>
 	</div>
-
+	</div>
+	
+	<div class="tab-pane fade" id="item3" aria-labelledby="item3-tab">
 	<div class="row">
 	  <div class="col-md-12">
         <table class="table">
@@ -260,31 +277,12 @@
 		</table>
       </div>
 	</div>
+	</div>
 	
 	</div>
 	
-	<div class="tab-pane fade" id="item22" aria-labelledby="item22-tab">
-    <div class="row">
-	  <div class="col-md-12">
-        <div id="chart">
-		<div id="candlestick"></div>
-		</div>
-	  </div>
-	  <div class="col-md-12">
-        <div id="chart">
-		<div id="volume"></div>
-		</div>
-	  </div>
-	  <div class="col-md-12">
-        <div id="chart">
-		<div id="filter"></div>
-		</div>
-	  </div>
-    </div>
-    </div>
-
-	</div>
-</div> <!-- for container -->
+</div> <!-- container -->
+</div> <!-- sidebar -->
 
 <script>
 var barData = {
@@ -491,82 +489,6 @@ var cchart = new Chart(cashchart, {
 });
 </script>
 
-<script type="text/javascript">
-google.charts.load('current', {'packages':['corechart', 'controls']});
-var chart_div = document.getElementById('chart');
-
-function drawChart() {
-   var data = new google.visualization.DataTable();
-   data.addColumn('datetime', 'Date');
-   data.addColumn('number', 'Open');
-   data.addColumn('number', 'High');
-   data.addColumn('number', 'Low');
-   data.addColumn('number', 'Close');
-   data.addColumn('number', 'Volume');
-   let d=JSON.parse('{{all_stocks|tojson}}');
-   d.forEach(function (di) {
-           data.addRow([{ v: new Date(di.date), f: di.date }, di.open, 
-                          di.high, di.low, di.close, di.volume]);
-   });
-	
-   var dashboard = new google.visualization.Dashboard(chart_div);
-   var control = new google.visualization.ControlWrapper({
-       controlType: 'ChartRangeFilter',
-       containerId: 'filter',
-       options: {
-           filterColumnIndex: 0,
-           ui: {
-               chartType: 'LineChart',
-               chartOptions: {
-                   chartArea: {
-                       height: '80%', width: '100%', 
-                       backgroundColor: { stroke: "gray", strokeWidth: 1 }
-                   },
-                   hAxis: { baselineColor: 'none' }
-               },
-               chartView: { columns: [0, 4] },
-           }
-       }
-   });
-
-   var chart = new google.visualization.ChartWrapper({
-       chartType: 'CandlestickChart',
-       containerId: 'candlestick',
-       options: {
-           chartArea: { height: '80%', width: '100%',  
-                        backgroundColor: { stroke: "gray", strokeWidth: 1 } },
-           hAxis: { type: 'category', slantedText: false, maxTextLines: 1, 
-                    maxAlternation: 1 },
-           legend: { position: 'none' },
-           candlestick: {
-               fallingColor: { strokeWidth: 0, fill: '#a52714' },
-               risingColor: { strokeWidth: 0, fill: '#0f9d58' }
-           },
-           title: "株価:"
-       },
-       view: { columns: [0, 3, 1, 4, 2] }
-   });
-
-   var volume = new google.visualization.ChartWrapper({
-       chartType: 'ColumnChart',
-       containerId: 'volume',
-       options: {
-           chartArea: { height: '80%', width: '100%', top: 40, bottom: 30, 
-                        backgroundColor: { stroke: "gray", strokeWidth: 1 } },
-           hAxis: { type: 'category', slantedText: false, maxTextLines: 1, 
-                    maxAlternation: 1 },
-           legend: { position: 'none' },
-           title: "出来高:"
-       },
-       view: { columns: [0, 5] }
-   });
-
-   dashboard.bind(control, [chart, volume]);
-   dashboard.draw(data);
-}
-google.charts.setOnLoadCallback(drawChart);
-</script>
-
 	<script src="https://riversun.github.io/chatux/chatux.min.js"></script>
 	<script>
 		const chatux = new ChatUx();
@@ -601,5 +523,6 @@ google.charts.setOnLoadCallback(drawChart);
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<script src="../static/bsadmin.js"></script>
   </body>
 </html>
