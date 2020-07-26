@@ -17,7 +17,7 @@ btd = {'1': '水産・農林業', '2': '鉱業', '3': '建設業', '4': '食料�
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html",)
+    return render_template("index.html")
     
 @app.route("/about")
 def about():
@@ -30,8 +30,16 @@ def buisnesstype(btype):
 
 @app.route("/search",methods=['GET'])
 def search():
-    code = "/company/" + request.args.get("code","")
-    return redirect(code)
+    code = request.args.get("code","")
+    if(code[0:4].isdigit()):
+        url = "/company/" + code[0:4]
+        return redirect(url)
+    else:
+        return render_template("404.html")
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template("404.html")
 
 @app.route('/company/<code>')
 def get_finance(code):
@@ -43,168 +51,168 @@ def get_finance(code):
         if len(str(financeinfo.netsales)) == 0:
             financeinfo.netsales = '-'
         else:
-            tmp = financeinfo.netsales / 1000000
+            tmp = int(financeinfo.netsales) / 1000000
             financeinfo.netsales = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # costofsales
         if len(str(financeinfo.costofsales)) == 0:
             financeinfo.costofsales = '-'
         else:
-            tmp = financeinfo.costofsales / 1000000
+            tmp = int(financeinfo.costofsales) / 1000000
             financeinfo.costofsales = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # grossprofit
         if len(str(financeinfo.grossprofit)) == 0:
             financeinfo.grossprofit = '-'
         else:
-            tmp = financeinfo.grossprofit / 1000000
+            tmp = int(financeinfo.grossprofit) / 1000000
             financeinfo.grossprofit = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # sellinggeneral
         if len(str(financeinfo.sellinggeneral)) == 0:
             financeinfo.sellinggeneral = '-'
         else:
-            tmp = financeinfo.sellinggeneral / 1000000
+            tmp = int(financeinfo.sellinggeneral) / 1000000
             financeinfo.sellinggeneral = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # operatingincome
         if len(str(financeinfo.operatingincome)) == 0:
             financeinfo.operatingincome = '-'
         else:
-            tmp = financeinfo.operatingincome / 1000000
+            tmp = int(financeinfo.operatingincome) / 1000000
             financeinfo.operatingincome = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # nonoperatingincome
         if len(str(financeinfo.nonoperatingincome)) == 0:
             financeinfo.nonoperatingincome = '-'
         else:
-            tmp = financeinfo.nonoperatingincome / 1000000
+            tmp = int(financeinfo.nonoperatingincome) / 1000000
             financeinfo.nonoperatingincome = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # nonoperatingexpenses
         if len(str(financeinfo.nonoperatingexpenses)) == 0:
             financeinfo.nonoperatingexpenses = '-'
         else:
-            tmp = financeinfo.nonoperatingexpenses / 1000000
+            tmp = int(financeinfo.nonoperatingexpenses) / 1000000
             financeinfo.nonoperatingexpenses = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # ordinaryIncome
         if len(str(financeinfo.ordinaryincome)) == 0:
             financeinfo.ordinaryincome = '-'
         else:
-            tmp = financeinfo.ordinaryincome / 1000000
+            tmp = int(financeinfo.ordinaryincome) / 1000000
             financeinfo.ordinaryincome = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # extraordinaryincome
         if len(str(financeinfo.extraordinaryincome)) == 0:
             financeinfo.extraordinaryincome = '-'
         else:
-            tmp = financeinfo.extraordinaryincome / 1000000
+            tmp = int(financeinfo.extraordinaryincome) / 1000000
             financeinfo.extraordinaryincome = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # extraordinaryloss
         if len(str(financeinfo.extraordinaryloss)) == 0:
             financeinfo.extraordinaryloss = '-'
         else:
-            tmp = financeinfo.extraordinaryloss / 1000000
+            tmp = int(financeinfo.extraordinaryloss) / 1000000
             financeinfo.extraordinaryloss = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # incomebeforeincometaxes
         if len(str(financeinfo.incomebeforeincometaxes)) == 0:
             financeinfo.incomebeforeincometaxes = '-'
         else:
-            tmp = financeinfo.incomebeforeincometaxes / 1000000
+            tmp = int(financeinfo.incomebeforeincometaxes) / 1000000
             financeinfo.incomebeforeincometaxes = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # incometaxes
         if len(str(financeinfo.incometaxes)) == 0:
             financeinfo.incometaxes = '-'
         else:
-            tmp = financeinfo.incometaxes / 1000000
+            tmp = int(financeinfo.incometaxes) / 1000000
             financeinfo.incometaxes = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # profitloss
         if len(str(financeinfo.profitloss)) == 0:
             financeinfo.profitloss = '-'
         else:
-            tmp = financeinfo.profitloss / 1000000
+            tmp = int(financeinfo.profitloss) / 1000000
             financeinfo.profitloss = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # currentassets
         if len(str(financeinfo.currentassets)) == 0:
             financeinfo.currentassets = '-'
         else:
-            tmp = financeinfo.currentassets / 1000000
+            tmp = int(financeinfo.currentassets) / 1000000
             financeinfo.currentassets = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # noncurrentassets
         if len(str(financeinfo.noncurrentassets)) == 0:
             financeinfo.noncurrentassets = '-'
         else:
-            tmp = financeinfo.noncurrentassets / 1000000
+            tmp = int(financeinfo.noncurrentassets) / 1000000
             financeinfo.noncurrentassets = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # propertyplantandequipment
         if len(str(financeinfo.propertyplantandequipment)) == 0:
             financeinfo.propertyplantandequipment = '-'
         else:
-            tmp = financeinfo.propertyplantandequipment / 1000000
+            tmp = int(financeinfo.propertyplantandequipment) / 1000000
             financeinfo.propertyplantandequipment = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # intangibleassets
         if len(str(financeinfo.intangibleassets)) == 0:
             financeinfo.intangibleassets = '-'
         else:
-            tmp = financeinfo.intangibleassets / 1000000
+            tmp = int(financeinfo.intangibleassets) / 1000000
             financeinfo.intangibleassets = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # investmentsAndotherAssets
         if len(str(financeinfo.investmentsAndotherAssets)) == 0:
             financeinfo.investmentsAndotherAssets = '-'
         else:
-            tmp = financeinfo.investmentsAndotherAssets / 1000000
+            tmp = int(financeinfo.investmentsAndotherAssets) / 1000000
             financeinfo.investmentsAndotherAssets = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # currentliabilities
         if len(str(financeinfo.currentliabilities)) == 0:
             financeinfo.currentliabilities = '-'
         else:
-            tmp = financeinfo.currentliabilities / 1000000
+            tmp = int(financeinfo.currentliabilities) / 1000000
             financeinfo.currentliabilities = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # noncurrentliabilities
         if len(str(financeinfo.noncurrentliabilities)) == 0:
             financeinfo.noncurrentliabilities = '-'
         else:
-            tmp = financeinfo.noncurrentliabilities / 1000000
+            tmp = int(financeinfo.noncurrentliabilities) / 1000000
             financeinfo.noncurrentliabilities = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # netAssets
         if len(str(financeinfo.netAssets)) == 0:
             financeinfo.netAssets = '-'
         else:
-            tmp = financeinfo.netAssets / 1000000
+            tmp = int(financeinfo.netAssets) / 1000000
             financeinfo.netAssets = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # scf
         if len(str(financeinfo.scf)) == 0:
             financeinfo.scf = '-'
         else:
-            tmp = financeinfo.scf / 1000000
+            tmp = int(financeinfo.scf) / 1000000
             financeinfo.scf = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # icf
         if len(str(financeinfo.icf)) == 0:
             financeinfo.icf = '-'
         else:
-            tmp = financeinfo.icf / 1000000
+            tmp = int(financeinfo.icf) / 1000000
             financeinfo.icf = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
             
         # fcf
         if len(str(financeinfo.fcf)) == 0:
             financeinfo.fcf = '-'
         else:
-            tmp = financeinfo.fcf / 1000000
+            tmp = int(financeinfo.fcf) / 1000000
             financeinfo.fcf = Decimal(str(tmp)).quantize(Decimal('0'),    rounding=ROUND_HALF_UP)
     
     return render_template("result.html",code=code,all_edinetcodeinfo=all_edinetcodeinfo, all_financeinfo=all_financeinfo)
@@ -213,9 +221,11 @@ def get_finance(code):
 def get_stocks(code):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
 
-    #datastore_client = datastore.Client.from_service_account_json('json file name')
+    # for local
+    #datastore_client = datastore.Client.from_service_account_json('file.json')
+    # for GAE
     datastore_client = datastore.Client()
-    key = datastore_client.key('Stocks',int(code))
+    key = datastore_client.key('Stock',int(code))
     entity = datastore_client.get(key)
     result=entity.get("stock")
     all_stocks=result
