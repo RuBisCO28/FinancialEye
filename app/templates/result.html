@@ -90,87 +90,87 @@
         <table class="table">
 		<thead class="thead-light">
 		 <th class="fixed-column-0">P/L</th>
-		 {% for financeinfo in all_financeinfo %}
-             <th>{{financeinfo.enddate}}</th>
+		 {% for enddate in all_financeinfo[3] %}
+             <th>{{enddate}}</th>
          {% endfor %}
 		</thead>
 		<tbody>
 		<tr>
 			<th>売上高</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.netsales}}</td>
+			{% for netsales in all_financeinfo[4] %}
+			<td>{{netsales}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>売上原価</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.costofsales}}</td>
+			{% for costofsales in all_financeinfo[5] %}
+			<td>{{costofsales}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>売上総利益</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.grossprofit}}</td>
+			{% for grossprofit in all_financeinfo[6] %}
+			<td>{{grossprofit}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>販管費</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.sellinggeneral}}</td>
+			{% for sellinggeneral in all_financeinfo[7] %}
+			<td>{{sellinggeneral}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>営業利益</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.operatingincome}}</td>
+			{% for operatingincome in all_financeinfo[8] %}
+			<td>{{operatingincome}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>営業外収益</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.nonoperatingincome}}</td>
+			{% for nonoperatingincome in all_financeinfo[9] %}
+			<td>{{nonoperatingincome}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>営業外費用</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.nonoperatingexpenses}}</td>
+			{% for nonoperatingexpenses in all_financeinfo[10] %}
+			<td>{{nonoperatingexpenses}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>経常利益</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.ordinaryincome}}</td>
+			{% for ordinaryincome in all_financeinfo[11] %}
+			<td>{{ordinaryincome}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>特別利益</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.extraordinaryincome}}</td>
+			{% for extraordinaryincome in all_financeinfo[12] %}
+			<td>{{extraordinaryincome}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>特別損失</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.extraordinaryloss}}</td>
+			{% for extraordinaryloss in all_financeinfo[13] %}
+			<td>{{extraordinaryloss}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>税引前当期純利益</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.incomebeforeincometaxes}}</td>
+			{% for incomebeforeincometaxes in all_financeinfo[14] %}
+			<td>{{incomebeforeincometaxes}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>法人税等</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.incometaxes}}</td>
+			{% for incometaxes in all_financeinfo[15] %}
+			<td>{{incometaxes}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>当期純利益</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.profitloss}}</td>
+			{% for profitloss in all_financeinfo[16] %}
+			<td>{{profitloss}}</td>
 			{% endfor %}
 		</tr>
 		</tbody>
@@ -178,64 +178,64 @@
       </div>
 	</div>
 	</div>
-	
+
     <div class="tab-pane fade" id="item2" aria-labelledby="item2-tab">
 	<div class="row">
 	  <div class="col-md-12">
         <table class="table">
 		<thead class="thead-light">
 		 <th class="fixed-column-0">B/S</th>
-		 {% for financeinfo in all_financeinfo %}
+		 {% for financeinfo in all_financeinfo[3] %}
              <th>{{financeinfo.enddate}}</th>
          {% endfor %}
 		</thead>
 		<tbody>
 		<tr>
 			<th>流動資産</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.currentassets}}</td>
+			{% for currentassets in all_financeinfo[17] %}
+			<td>{{currentassets}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>固定資産</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.noncurrentassets}}</td>
+			{% for noncurrentassets in all_financeinfo[18] %}
+			<td>{{noncurrentassets}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>有形固定資産</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.propertyplantandequipment}}</td>
+			{% for propertyplantandequipment in all_financeinfo[19] %}
+			<td>{{propertyplantandequipment}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>無形固定資産</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.intangibleassets}}</td>
+			{% for intangibleassets in all_financeinfo[20] %}
+			<td>{{intangibleassets}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>投資その他の資産</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.investmentsAndotherAssets}}</td>
+			{% for investmentsAndotherAssets in all_financeinfo[21] %}
+			<td>{{investmentsAndotherAssets}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>流動負債</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.currentliabilities}}</td>
+			{% for currentliabilities in all_financeinfo[22] %}
+			<td>{{currentliabilities}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>固定負債</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.noncurrentliabilities}}</td>
+			{% for noncurrentliabilities in all_financeinfo[23] %}
+			<td>{{noncurrentliabilities}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>純資産</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.netAssets}}</td>
+			{% for netAssets in all_financeinfo[24] %}
+			<td>{{netAssets}}</td>
 			{% endfor %}
 		</tr>
 		</tbody>
@@ -250,27 +250,27 @@
         <table class="table">
 		<thead class="thead-light">
 		 <th class="fixed-column-0">C/S</th>
-		 {% for financeinfo in all_financeinfo %}
-             <th>{{financeinfo.enddate}}</th>
+		 {% for enddate in all_financeinfo[3] %}
+             <th>{{enddate}}</th>
          {% endfor %}
 		</thead>
 		<tbody>
 		<tr>
 			<th>営業活動によるキャッシュ・フロー</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.scf}}</td>
+			{% for scf in all_financeinfo[25] %}
+			<td>{{scf}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>投資活動によるキャッシュ・フロー</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.icf}}</td>
+			{% for icf in all_financeinfo[26] %}
+			<td>{{icf}}</td>
 			{% endfor %}
 		</tr>
 		<tr>
 			<th>財務活動によるキャッシュ・フロー</th>
-			{% for financeinfo in all_financeinfo %}
-			<td>{{financeinfo.fcf}}</td>
+			{% for fcf in all_financeinfo[27] %}
+			<td>{{fcf}}</td>
 			{% endfor %}
 		</tr>
 		</tbody>
@@ -286,8 +286,8 @@
 
 <script>
 var barData = {
-  labels : [{% for financeinfo in all_financeinfo %}
-            "{{financeinfo.enddate}}",
+  labels : [{% for enddate in all_financeinfo[3] %}
+            "{{enddate}}",
         {% endfor %}],
   datasets : [
   {
@@ -297,9 +297,9 @@ var barData = {
     pointBackgroundColor    : "rgba(254,97,132,0.8)",
 	fill: false,
 	yAxisID: "y-axis-2",
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.grossprofit != '-' %}
-                  ({{financeinfo.grossprofit}} / {{financeinfo.netsales}}) * 100,
+    data : [{% for grossprofit in all_financeinfo[28] %}
+			{%if grossprofit != 'nan' %}
+                  {{grossprofit}},
 			{% else %}
 				,
 			{% endif %}
@@ -312,9 +312,9 @@ var barData = {
     pointBackgroundColor    : "rgba(96,250,126,0.8)",
 	fill: false,
 	yAxisID: "y-axis-2",
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.operatingincome != '-' %}
-                  ({{financeinfo.operatingincome}} / {{financeinfo.netsales}}) * 100,
+    data : [{% for operatingincome in all_financeinfo[29] %}
+			{%if operatingincome != 'nan' %}
+				  {{operatingincome}},
 			{% else %}
 				,
 			{% endif %}
@@ -327,9 +327,9 @@ var barData = {
     pointBackgroundColor    : "rgba(255,252,141,0.8)",
 	fill: false,
 	yAxisID: "y-axis-2",
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.ordinaryincome != '-' %}
-                  ({{financeinfo.ordinaryincome}} / {{financeinfo.netsales}}) * 100,
+    data : [{% for ordinaryincome in all_financeinfo[30] %}
+			{%if ordinaryincome != 'nan' %}
+                  {{ordinaryincome}},
 			{% else %}
 				,
 			{% endif %}
@@ -342,9 +342,9 @@ var barData = {
     pointBackgroundColor    : "rgba(218,181,255,0.8)",
 	fill: false,
 	yAxisID: "y-axis-2",
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.profitloss != '-' %}
-                  ({{financeinfo.profitloss}} / {{financeinfo.netsales}}) * 100,
+    data : [{% for profitloss in all_financeinfo[31] %}
+			{%if profitloss != 'nan' %}
+                  {{profitloss}},
 			{% else %}
 				,
 			{% endif %}
@@ -357,9 +357,9 @@ var barData = {
     backgroundColor : "rgba(54,164,235,0.5)",
     borderWidth:5,
 	yAxisID: "y-axis-1",
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.netsales != '-' %}
-                  {{financeinfo.netsales}},
+    data : [{% for netsales in all_financeinfo[4] %}
+			{%if netsales != '-' %}
+                  {{netsales}},
 			{% else %}
 				,
 			{% endif %}
@@ -413,8 +413,8 @@ var schart = new Chart(saleschart, {
 });
 
 var CashData = {
-  labels : [{% for financeinfo in all_financeinfo %}
-            "{{financeinfo.enddate}}",
+  labels : [{% for enddate in all_financeinfo[3] %}
+            "{{enddate}}",
         {% endfor %}],
   datasets : [
   {
@@ -423,9 +423,9 @@ var CashData = {
     borderColor : "rgba(254,97,132,0.8)",
     backgroundColor : "rgba(254,97,132,0.5)",
     borderWidth:5,
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.scf != '-' %}
-                  {{financeinfo.scf}},
+    data : [{% for scf in all_financeinfo[25] %}
+			{%if scf != '-' %}
+                  {{scf}},
 			{% else %}
 				,
 			{% endif %}
@@ -437,9 +437,9 @@ var CashData = {
     borderColor : "rgba(54,164,235,0.8)",
     backgroundColor : "rgba(54,164,235,0.5)",
     borderWidth:5,
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.icf != '-' %}
-                  {{financeinfo.icf}},
+    data : [{% for icf in all_financeinfo[26] %}
+			{%if icf != '-' %}
+                  {{icf}},
 			{% else %}
 				,
 			{% endif %}
@@ -451,9 +451,9 @@ var CashData = {
     borderColor : "rgba(96,250,126,0.8)",
     backgroundColor : "rgba(96,250,126,0.5)",
     borderWidth:5,
-    data : [{% for financeinfo in all_financeinfo %}
-			{%if financeinfo.fcf != '-' %}
-                  {{financeinfo.fcf}},
+    data : [{% for fcf in all_financeinfo[27] %}
+			{%if fcf != '-' %}
+                  {{fcf}},
 			{% else %}
 				,
 			{% endif %}
