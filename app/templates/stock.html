@@ -47,8 +47,8 @@
 			<td style="width:80%">{{edinetcodeinfo.businesstype}}</td>
 		</tr>
 		<tr>
-			<th style="width:20%">URL(IR)</th>
-			<td style="width:80%"></td>
+			<th style="width:20%">上場区分</th>
+			<td style="width:80%">{{edinetcodeinfo.tosho}}</td>
 		</tr>
 		<tr>
 			<th style="width:20%">決算月</th>
@@ -56,7 +56,7 @@
 		</tr>
 		<tr>
 			<th style="width:20%">特色</th>
-			<td style="width:80%">-</td>
+			<td style="width:80%">{{edinetcodeinfo.description}}</td>
 		</tr>
 		</table>
 	{% endfor %}
@@ -81,7 +81,7 @@ function splitData(rawData) {
     var volumes = [];
     for (var i = 0; i < rawData.length; i++) {
 		categoryData.push(rawData[i].date);
-		values.push([rawData[i]['open'],rawData[i]['close'],rawData[i]['high'],rawData[i]['low'],rawData[i]['volume'],]);
+		values.push([rawData[i]['open'],rawData[i]['close'],rawData[i]['low'],rawData[i]['high'],rawData[i]['volume'],]);
 		volumes.push([i, rawData[i]['volume'], rawData[i]['open'] > rawData[i]['close'] ? 1 : -1]);
     }
 
@@ -292,7 +292,7 @@ myChart.setOption(option = {
             }
         },
         {
-            name: 'Volume',
+            name: '出来高',
             type: 'bar',
             xAxisIndex: 1,
             yAxisIndex: 1,
@@ -301,12 +301,23 @@ myChart.setOption(option = {
     ]
 }, true);
 
+function dateToStr24HPad0(date, format) {
+    format = format.replace(/YYYY/g, date.getFullYear());
+    format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+    format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
+    
+    return format;
+}
+var today=new Date();
+var enddate=dateToStr24HPad0(today, 'YYYY-MM-DD');
+var startdate=(dateToStr24HPad0(today.setDate(dt.getDate() - 8), 'YYYY-MM-DD'));
+
 myChart.dispatchAction({
     type: 'brush',
     areas: [
         {
             brushType: 'lineX',
-            coordRange: ['2020-06-10', '2020-07-10'],
+            coordRange: [startdate, enddate],
             xAxisIndex: 0
         }
     ]
