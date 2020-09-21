@@ -16,7 +16,7 @@
       </a>
 	  <form action="/search" method="GET" class="form-inline">
         <div class="input-group">
-        <input type="text" class="form-control" name="code" id="text5a" placeholder="銘柄コード">
+        <input type="text" class="form-control" name="code" id="text5a" placeholder="銘柄コード（例: 4547）">
         <div class="input-group-append">
           <button type="submit" class="btn btn-secondary">検索</button>
         </div>
@@ -44,36 +44,35 @@
 		</table>
     </div>
 	
-		<script src="https://riversun.github.io/chatux/chatux.min.js"></script>
-	<script>
-		const chatux = new ChatUx();
-	
-		//ChatUXの初期化パラメータ
-	const initParam =
-			{
-				renderMode: 'auto',
-				api: {
-					//echo chat server
-					endpoint: 'https://script.google.com/macros/s/AKfycbzro2SWVx5lMKfbLu4cBt16xbqg4lT7xU5wfu4bbSQs-OMcFsQh/exec',
-					method: 'GET',
-					dataType: 'jsonp'
-				},
-				bot: {
-					botPhoto: 'https://riversun.github.io/chatbot/bot_icon_operator.png',
-					humanPhoto: null,
-					widget: {
-						sendLabel: '送信',
-						placeHolder: '分からない単語を入力してみてください'
-					}
-				},
-				window: {
-					title: '株bot',
-					infoUrl: 'https://github.com/riversun/chatux'
-				}
-			};
-		chatux.init(initParam);
-		chatux.start(false);
-	</script>
+    <script src="https://riversun.github.io/chatux/chatux.min.js"></script>
+    <script>
+     const chatux = new ChatUx();
+    
+     const initParam =
+            {
+                renderMode: 'auto',
+                api: {
+                    endpoint: 'https://kabuchatserver-aan2wimtkq-uw.a.run.app/chat',
+                    method: 'GET',
+                    dataType: 'json'
+                },
+                bot: {
+                    botPhoto: 'https://1.bp.blogspot.com/-U-God4u2s7Q/VdLsEO8pS9I/AAAAAAAAw2w/CucJpIwog34/s400/vegetable_kyouyasai_syougoin_daikon.png',
+                    humanPhoto: null,
+                    widget: {
+                        sendLabel: '検索',
+                        placeHolder: 'キーワードを入力（例: 医薬品）'
+                    }
+                },
+                window: {
+                    title: '銘柄検索ボット',
+                    infoUrl: 'https://github.com/RuBisCO28/KabuChatServer'
+                }
+            };
+        chatux.init(initParam);
+        chatux.start(false);
+    
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
