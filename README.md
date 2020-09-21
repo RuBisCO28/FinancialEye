@@ -8,10 +8,12 @@
 
 [URL] https://fe360-285518.wl.r.appspot.com/
 
-# Architecture
+# インフラ構成
 - GCP(GCE/GAE/Cloud Run/Cloud Build/Cloud Storage/Data Store)
 - GCPの無料枠を最大限に生かし、アプリ自体はGAE、データの更新にGCE、データのアーカイブにCloud Storage / DataStoreを使用。
 - チェットボット用のサーバについてはDockerを使い、Cloud Run/Cloud Buildで本番環境をサーバーレスで運用。
+
+![arch](https://user-images.githubusercontent.com/54470624/93764598-59a73380-fc4e-11ea-956e-44a39430841e.PNG)
 
 本構成での特徴は以下の4つとなります。
 
