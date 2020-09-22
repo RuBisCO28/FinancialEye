@@ -9,16 +9,21 @@
 	<link rel="shortcut icon" href="../static/favicon.ico">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 	<title>Financial Eye 360 - {{code}}</title>
-<style type="text/css">
-<!--
-h4 {
-  padding: 0.25em 0.5em;
-  color: #494949;
-  background: transparent;
-  border-left: solid 5px #7db4e6;
-}
--->
-</style>
+	<style>
+      #newsList {
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: space-around;
+      }
+      #newsList img {
+        width: 200px;
+        height: 150px;
+      }
+      .content {
+        width: 200px;
+        border: 1px solid #aaa;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-dark bg-primary">
@@ -41,8 +46,8 @@ h4 {
         <ul class="list-unstyled">
             <li><a href="/company/{{code}}">業績データ(通期)</a></li>
             <li><a href="/stocks/{{code}}">株価データ</a></li>
-			<li><a href="/news/{{code}}">ニュース</a></li>
-            <li><a href="#">Googleトレンド</a></li>
+			<li><a href="#">ニュース</a></li>
+            <li><a href="/gtrend/{{code}}">Googleトレンド</a></li>
         </ul>
     </div>
 
@@ -72,79 +77,42 @@ h4 {
 		</table>
 	{% endfor %}
 	
-	<div class="row">
-      <div class="col-md-6">
-        <canvas id="gtrendchart" width="600" height="400"></canvas>
-      </div>
-	  <div class="col-md-6">
-	    <h4>トップ[関連キーワード,件数]</h4>
-		<table class="table">
-        {% for top in gtrend_t %}
-		<tr>
-			<td>{{top}}</td>
-		</tr>
-		{% endfor %}
-		</table>
-		<h4>急上昇[関連キーワード,件数]</h4>
-		<table class="table">
-        {% for rising in gtrend_r %}
-		<tr>
-			<td>{{rising}}</td>
-		</tr>
-		{% endfor %}
-		</table>
-      </div>
-	</div>
+    <div id="newsList"></div>
 
 </div> <!-- container -->
 </div> <!-- sidebar -->
 
 <script>
-var barData = {
-  labels : [{% for i in gtrend_g['date'] %}
-		"{{ i|e }}",
-	{% endfor %}],
-  datasets : [
-  {
-    type: 'line',
-    label: '人気度',
-    borderColor : "rgba(54,164,235,0.8)",
-    pointBackgroundColor    : "rgba(54,164,235,0.5)",
-	fill: false,
-    data : [{% for j in gtrend_g['name'].tolist() %}
-		{{ j|e }},
-	{% endfor %}]
-  }
-  ]
+const newslist = document.getElementById('newsList');
+var rawData={{all_news|tojson}};
+console.log(rawData);
+if(rawData!==""){
+	rawData.sort(function(a,b) {
+		return (a.publishedAt < b.publishedAt ? 1 : -1);
+	});
+	for (var i = 0; i < rawData.length; i++) {
+		const div = document.createElement('div');
+		
+		if(rawData[i].urlToImage==null){
+			rawData[i].urlToImage = 'https://2.bp.blogspot.com/-VJOwedxrDa4/WWXXWuTIarI/AAAAAAABFho/l09dY2mf-qs1atvIob4Fgiri45FB6MKCgCLcBGAs/s400/website_news.png';
+		}
+	
+		div.classList.add('content');
+		div.innerHTML = `<a href="${rawData[i].url}" target="_blank">
+							<img src="${rawData[i].urlToImage}">
+							<p style="line-height: 1.0;">${rawData[i].publishedAt.split('T')[0]}</p>
+							<p style="line-height: 1.0;">${rawData[i].title}</p>
+						</a>`;
+		
+		newslist.appendChild(div); 
+	}
+} else {
+const div = document.createElement('div');
+div.classList.add('content');
+div.innerHTML = `<h1>Not Found</h1>`;
+
+newslist.appendChild(div); 
 }
-var gtrendchart = document.getElementById("gtrendchart");
-var gchart = new Chart(gtrendchart, {
-  type:'bar',
-  data:barData,
-  options: {
-      responsive: true,
-      title: {
-        display: true,
-        text: '過去1か月の人気度の傾向'
-      },
-	  scales: {
-        yAxes: [{
-		  id: "y-axis-1",
-		  type: "linear",
-		  position: "left",
-          ticks: {
-            //suggestedMax: Math.max(values) / 1000000,
-            suggestedMin: 0,
-            //stepSize: 10,
-            callback: function(value, index, values){
-              return  value
-            }
-          }
-        }
-		]
-      }
-  }
-});
 </script>
 
 	<script src="https://riversun.github.io/chatux/chatux.min.js"></script>

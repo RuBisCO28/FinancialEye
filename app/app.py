@@ -5,6 +5,7 @@ from google.cloud import datastore
 from google.cloud import storage
 from io import BytesIO
 from pytrends.request import TrendReq
+from newsapi import NewsApiClient
 import json
 import pandas as pd
 
@@ -109,6 +110,23 @@ def get_gtrend(code):
     else:
         rising = trends[keyword]['rising'].values.tolist()
     return render_template("gtrend.html",code=code,all_edinetcodeinfo=all_edinetcodeinfo, gtrend_g=dfi,gtrend_t=top,gtrend_r=rising)
+
+@app.route('/news/<code>')
+def get_news(code):
+    all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
+    
+    newsapi = NewsApiClient(api_key='Your API Key')
+    query=""
+    for edinetcodeinfo in all_edinetcodeinfo:
+        query = edinetcodeinfo.submitter.replace('株式会社','').replace('株','')
+    all_articles = newsapi.get_everything(q=str(query))
+    if( all_articles['totalResults'] > 0 ):
+        all_news=all_articles['articles']
+    else:
+        all_news=""
+    
+    return render_template("news.html",code=code,all_edinetcodeinfo=all_edinetcodeinfo, all_news=all_news)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
