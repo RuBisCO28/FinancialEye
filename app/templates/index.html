@@ -8,6 +8,16 @@
 	<link rel="shortcut icon" href="../static/favicon.ico">
 	<link rel="stylesheet" href="../static/css/search.css">
 	<title>Financial Eye 360</title>
+		<style type="text/css">
+<!--
+h4 {
+  padding: 0.25em 0.5em;
+  color: #494949;
+  background: transparent;
+  border-left: solid 5px #7db4e6;
+}
+-->
+</style>
   </head>
   <body>
     <nav class="navbar navbar-expand navbar-dark bg-primary">
@@ -22,7 +32,8 @@
       <div class="row justify-content-center align-items-center">
 	    <div class="col-12"> &nbsp </div>
 		<div class="col-12"> &nbsp </div>
-        <div class="col-12"><h1 class="text-center">Financial Eye 360</h1><h4 class="text-center">Search for a stock to start your analysis</h4></div>
+        <div class="col-12"><h1 class="text-center">Financial Eye 360</h1></div>
+        <div class="col-12"> &nbsp </div>
         <div class="col-12"> &nbsp </div>
         <form action="/search" method="GET">
           <div class="form-group">
@@ -35,12 +46,12 @@
           </div>
         </form>
 		<div class="col-12"> &nbsp </div>
-		<div class="col-12"> &nbsp </div>
       </div>
 		
 		<div class="row">
 		<div class="col-3"> &nbsp </div>
 		<div class="col-6">
+		<h4>業種別:</h4>
 		<table class="table table-bordered">
 		<tr>
 		<td><a href="/buisnesstype/1"><strong>水産・農林業</strong></a></td>
@@ -91,8 +102,8 @@
 		<td></td>
 		</tr>
 		</table>
-		<div class="col-3"> &nbsp </div>
         </div>
+		<div class="col-3"> &nbsp </div>
 		</div>
 
 	</div>

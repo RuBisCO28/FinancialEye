@@ -127,6 +127,5 @@ def get_news(code):
     
     return render_template("news.html",code=code,all_edinetcodeinfo=all_edinetcodeinfo, all_news=all_news)
 
-
 if __name__ == "__main__":
     app.run(debug=True)
