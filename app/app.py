@@ -1,4 +1,6 @@
 from flask import Flask,render_template,request,redirect,jsonify,abort,make_response
+from flask_paginate import Pagination, get_page_parameter
+from flask_bootstrap import Bootstrap
 from flask_cors import CORS
 from models.models import EdinetCodeInfo
 from google.cloud import datastore
@@ -8,6 +10,7 @@ from pytrends.request import TrendReq
 from newsapi import NewsApiClient
 import json
 import pandas as pd
+
 
 app = Flask(__name__)
 btd = {'1': '水産・農林業', '2': '鉱業', '3': '建設業', '4': '食料品', '5': '繊維製品', '6': 'パルプ・紙', '7': '化学',
@@ -28,7 +31,11 @@ def about():
 @app.route("/buisnesstype/<btype>")
 def buisnesstype(btype):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.businesstype==btd[btype]).all()
-    return render_template("buisnesstype.html",all_edinetcodeinfo=all_edinetcodeinfo)
+    page_disp_msg = '表示 <b>{start}件 - {end}件 </b> 計：<b>{total}</b>件'
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    res = all_edinetcodeinfo[(page - 1)*10: page*10]
+    pagination = Pagination(page=page, total=len(all_edinetcodeinfo),  per_page=10, css_framework='bootstrap4', display_msg=page_disp_msg)
+    return render_template("buisnesstype.html",all_edinetcodeinfo=res, pagination=pagination)
 
 @app.route("/search",methods=['GET'])
 def search():
