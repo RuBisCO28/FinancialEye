@@ -347,7 +347,14 @@ myChart.dispatchAction({
                 },
                 window: {
                     title: '銘柄検索ボット',
-                    infoUrl: 'https://github.com/RuBisCO28/KabuChatServer'
+                    infoUrl: 'https://github.com/RuBisCO28/KabuChatServer',
+					size: {
+						width: 350,//ウィンドウの幅
+						height: 550,//ウィンドウの高さ
+						minWidth: 300,//ウィンドウの最小幅
+						minHeight: 300,//ウィンドウの最小高さ
+						titleHeight: 40//ウィンドウのタイトルバー高さ
+					}
                 }
             };
         chatux.init(initParam);

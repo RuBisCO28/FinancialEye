@@ -11,7 +11,6 @@ from newsapi import NewsApiClient
 import json
 import pandas as pd
 
-
 app = Flask(__name__)
 btd = {'1': '水産・農林業', '2': '鉱業', '3': '建設業', '4': '食料品', '5': '繊維製品', '6': 'パルプ・紙', '7': '化学',
        '8': '医薬品', '9': '石油・石炭製品', '11': 'ゴム製品', '12': 'ガラス・土石製品', '13': '鉄鋼', '14': '非鉄金属',
@@ -19,15 +18,18 @@ btd = {'1': '水産・農林業', '2': '鉱業', '3': '建設業', '4': '食料�
        '22': '陸運業', '23': '海運業', '24': '空運業', '25': '倉庫・運輸関連', '26': '情報・通信業', '27': '卸売業', '28': '小売業',
        '29': '銀行業', '30': '証券、商品先物取引業', '31': '保険業', '32': 'その他金融業', '33': '不動産業', '34': 'サービス業'}
 
+# Show Search page
 @app.route("/")
 @app.route("/index")
 def index():
     return render_template("index.html")
-    
+
+# Show About page
 @app.route("/about")
 def about():
     return render_template("about.html")
 
+# Show companies by company type
 @app.route("/buisnesstype/<btype>")
 def buisnesstype(btype):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.businesstype==btd[btype]).all()
@@ -37,6 +39,7 @@ def buisnesstype(btype):
     pagination = Pagination(page=page, total=len(all_edinetcodeinfo),  per_page=10, css_framework='bootstrap4', display_msg=page_disp_msg)
     return render_template("buisnesstype.html",all_edinetcodeinfo=res, pagination=pagination)
 
+# Search company by name or code
 @app.route("/search",methods=['GET'])
 def search():
     code = request.args.get("code","")
@@ -50,6 +53,7 @@ def search():
 def not_found(error):
     return render_template("404.html")
 
+# Get the finance data from Cloud Storage
 @app.route('/company/<code>')
 def get_finance(code):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
@@ -74,6 +78,7 @@ def get_finance(code):
     
     return render_template("result.html",code=code,all_edinetcodeinfo=all_edinetcodeinfo, all_financeinfo=all_financeinfo)
 
+# Get the stock data from DataStore
 @app.route('/stocks/<code>')
 def get_stocks(code):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
@@ -89,6 +94,7 @@ def get_stocks(code):
     all_stocks=result
     return render_template("stock.html",code=code,all_edinetcodeinfo=all_edinetcodeinfo, all_stocks=all_stocks)
 
+# Get the Google Trend info via Google Trend API
 @app.route('/gtrend/<code>')
 def get_gtrend(code):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
@@ -118,6 +124,7 @@ def get_gtrend(code):
         rising = trends[keyword]['rising'].values.tolist()
     return render_template("gtrend.html",code=code,all_edinetcodeinfo=all_edinetcodeinfo, gtrend_g=dfi,gtrend_t=top,gtrend_r=rising)
 
+# Get the news via News API
 @app.route('/news/<code>')
 def get_news(code):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
