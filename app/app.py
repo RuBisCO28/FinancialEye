@@ -129,7 +129,7 @@ def get_gtrend(code):
 def get_news(code):
     all_edinetcodeinfo = EdinetCodeInfo.query.filter(EdinetCodeInfo.securitiescode==code).all()
     
-    newsapi = NewsApiClient(api_key='Your API key')
+    newsapi = NewsApiClient(api_key='Your API Key')
     query=""
     for edinetcodeinfo in all_edinetcodeinfo:
         query = edinetcodeinfo.submitter.replace('株式会社','').replace('株','')
