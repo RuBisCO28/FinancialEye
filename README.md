@@ -6,8 +6,6 @@
 株価は他サイトから取得するという煩雑になりがちな財務分析作業を  
 自動かつひとつのツールとして提供することで、より手軽に分析することを目指して作成しました。
 
-[URL] https://fe360-285518.wl.r.appspot.com/
-
 # インフラ構成
 - GCP(GCE/GAE/Cloud Run/Cloud Build/Cloud Storage/Data Store)
 - GCPの無料枠を最大限に生かし、アプリ自体はGAE、データの更新にGCE、データのアーカイブにCloud Storage / DataStoreを使用。

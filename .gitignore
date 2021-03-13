@@ -3,3 +3,4 @@ Lib/
 Scripts/
 archive/
 pyvenv.cfg
+workspace.code-workspace
